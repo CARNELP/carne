@@ -43,10 +43,12 @@ input,textarea,select{width:100%;background:#000;color:#fff;border:1px solid #ff
   <h1>Categorías</h1>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 20px">
     <div class="card" style="flex-direction:column;align-items:center;text-align:center;margin:0" onclick="goCat('Hamburguesas')"><span style="font-size:32px">🍔</span><b>Hamburguesas</b></div>
-    <div class="card" style="flex-direction:column;align-items:center;text-align:center;margin:0" onclick="goCat('Papas')"><span style="font-size:32px">🍟</span><b>Papas</b></div>
-    <div class="card" style="flex-direction:column;align-items:center;text-align:center;margin:0" onclick="goCat('Bebidas con Alcohol')"><span style="font-size:32px">🍺</span><b>Con Alcohol</b></div>
-    <div class="card" style="flex-direction:column;align-items:center;text-align:center;margin:0" onclick="goCat('Bebidas sin Alcohol')"><span style="font-size:32px">🥤</span><b>Sin Alcohol</b></div>
+    <div class="card" style="flex-direction:column;align-items:center;text-align:center;margin:0" onclick="goCat('Acompañamientos')"><span style="font-size:32px">🍟</span><b>Acompañamientos</b></div>
+    <div class="card" style="flex-direction:column;align-items:center;text-align:center;margin:0" onclick="goCat('Ensaladas')"><span style="font-size:32px">🥗</span><b>Ensaladas</b></div>
     <div class="card" style="flex-direction:column;align-items:center;text-align:center;margin:0" onclick="goCat('Postres')"><span style="font-size:32px">🍰</span><b>Postres</b></div>
+    <div class="card" style="flex-direction:column;align-items:center;text-align:center;margin:0" onclick="goCat('Bebida sin alcohol')"><span style="font-size:32px">🥤</span><b>Sin Alcohol</b></div>
+    <div class="card" style="flex-direction:column;align-items:center;text-align:center;margin:0" onclick="goCat('Bebida con alcohol')"><span style="font-size:32px">🍺</span><b>Con Alcohol</b></div>
+    <div class="card" style="flex-direction:column;align-items:center;text-align:center;margin:0" onclick="goCat('Productos')"><span style="font-size:32px">🫙</span><b>Productos</b></div>
     <div class="card" style="flex-direction:column;align-items:center;text-align:center;margin:0" onclick="goCat('Promos')"><span style="font-size:32px">🔥</span><b>Promos</b></div>
   </div>
   <div style="padding:16px 20px"><button class="btn-gold" onclick="show('admin')">📣 Admin / Difusión Masiva</button></div>
@@ -93,18 +95,69 @@ input,textarea,select{width:100%;background:#000;color:#fff;border:1px solid #ff
 
 <script>
 const WA="5492216041030";
+const IMG_BURGER="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400";
+const IMG_PAPAS="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=400";
+const IMG_ENSALADA="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400";
+const IMG_POSTRE="https://images.unsplash.com/photo-1551024506-0bccd828d307?w=400";
+const IMG_SIN="https://images.unsplash.com/photo-1629203851122-3726ecdf080e?w=400";
+const IMG_CON="https://images.unsplash.com/photo-1535958636474-b021ee887b13?w=400";
+const IMG_PROD="https://images.unsplash.com/photo-1472476443507-c7a5948772fc?w=400";
+const IMG_PROMO="https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=400";
 const MENU=[
-{id:1,cat:"Hamburguesas",name:"Clásica CARNE",desc:"Carne 150g, queso cheddar, lechuga, tomate, salsa CARNE",price:8900,img:"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400"},
-{id:2,cat:"Hamburguesas",name:"Doble Queso",desc:"Doble carne 300g, doble cheddar, cebolla caramelizada",price:10500,img:"https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=400"},
-{id:3,cat:"Hamburguesas",name:"BBQ Bacon",desc:"Carne 150g, bacon crujiente, salsa BBQ, cebolla frita",price:11200,img:"https://images.unsplash.com/photo-1550547660-d9450f859349?w=400"},
-{id:4,cat:"Papas",name:"Papas Clásicas",desc:"Corte clásico, sal marina, crujientes por fuera",price:5500,img:"https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=400"},
-{id:5,cat:"Papas",name:"Papas Rústicas con Romero",desc:"Corte rústico, romero fresco, toque de ajo",price:6500,img:"https://images.unsplash.com/photo-1518013431117-eb1465fa5752?w=400"},
-{id:6,cat:"Bebidas con Alcohol",name:"Cerveza Artesanal",desc:"Pinta 500ml, rubia o roja",price:4500,img:"https://images.unsplash.com/photo-1535958636474-b021ee887b13?w=400"},
-{id:7,cat:"Bebidas sin Alcohol",name:"Gaseosa 500ml",desc:"Coca, Sprite o Fanta, bien fría",price:2800,img:"https://images.unsplash.com/photo-1629203851122-3726ecdf080e?w=400"},
-{id:8,cat:"Postres",name:"Brownie con Helado",desc:"Brownie tibio, helado de vainilla",price:5200,img:"https://images.unsplash.com/photo-1551024506-0bccd828d307?w=400"},
-{id:9,cat:"Promos",name:"Combo 2x1 Clásica",desc:"2 Clásicas + 2 Papas + 2 Gaseosas",price:18900,img:"https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=400"},
+{id:1,cat:"Hamburguesas",name:"Completa",desc:"Pan,carne,lechuga,tapenade de tomates, cebolla morada,panceta crocante, queso cheddar,. huevo a la plancha y pepinillos.",price:19400,img:IMG_BURGER},
+{id:2,cat:"Hamburguesas",name:"Clásica",desc:"Pan, carne, lechuga, tapenade de tomates, cebolla morada.",price:14000,img:IMG_BURGER},
+{id:3,cat:"Hamburguesas",name:"Queso",desc:"Hamburguesa de carne de res orgánica, pan brioche y queso cheddar.",price:14000,img:IMG_BURGER},
+{id:4,cat:"Hamburguesas",name:"Hongos",desc:"Pan, carne, hongos, cebolla asada, tapenade de tomates y queso danbo.",price:17500,img:IMG_BURGER},
+{id:5,cat:"Hamburguesas",name:"BBQ",desc:"Hamburguesa de carne pastoril,pan brioche,queso,cebolla asada,panceta ahumada a la plancha y salsa bbq.",price:17200,img:IMG_BURGER},
+{id:6,cat:"Hamburguesas",name:"Vegetariana",desc:"Portobello a la plancha, tapenade de tomates, lechuga morada, queso Halloumi y pan de cúrcuma.",price:16500,img:IMG_BURGER},
+{id:7,cat:"Hamburguesas",name:"Pollo",desc:"Pan brioche, pollo pastoril crispy, mayonesa de crema ácida, palta , ensalada de repollo y pickles de zanahoria.",price:17500,img:IMG_BURGER},
+{id:8,cat:"Hamburguesas",name:"Niño",desc:"Hamburguesa de 80 g, con queso cheddar.",price:10500,img:IMG_BURGER},
+{id:9,cat:"Acompañamientos",name:"Papas Tradicionales",desc:"Papas fritas grandes.",price:8700,img:IMG_PAPAS},
+{id:10,cat:"Acompañamientos",name:"Papas Especiales con Panceta",desc:"Papas fritas con queso crema, panceta ahumada y ciboulette.",price:13500,img:IMG_PAPAS},
+{id:11,cat:"Acompañamientos",name:"Papas Especiales con Hongos Asados",desc:"Papas Fritas con queso crema, hongos asados y ciboulette.",price:13500,img:IMG_PAPAS},
+{id:12,cat:"Acompañamientos",name:"Pinchos de Queso Halloumi",desc:"Pinchos de queso Halloumi grillado a la plancha.acompañado de salsa artesanal picante de tomate organico.",price:8200,img:IMG_PAPAS},
+{id:13,cat:"Acompañamientos",name:"Pinchos de Hongos",desc:"Hongos a la pancha con nuestro aceite de chiles caseros y un final crujiente con aceite de ajíes crocantes",price:7800,img:IMG_PAPAS},
+{id:14,cat:"Acompañamientos",name:"Croquetas",desc:"Papa y queso cuartirolo artesanal. Apto celiacos.",price:8000,img:IMG_PAPAS},
+{id:15,cat:"Acompañamientos",name:"Nuggets de pollo",desc:"Nuggets de pollo pastoril crispy, acompañado con papas.",price:14500,img:IMG_PAPAS},
+{id:16,cat:"Acompañamientos",name:"Piqueo de Hongos",desc:"Piqueo con croquetas de papas con centro de queso, queso halloumi grillado y portobelos asados. acompañados ocn un dressing de perejil",price:17000,img:IMG_PAPAS},
+{id:17,cat:"Acompañamientos",name:"Piqueo de Arros de Cebolla",desc:"Piqueo con croquetas, arroz de cebolla, nuggets de pollo. Acompañados de un dressing de mayocrema",price:17000,img:IMG_PAPAS},
+{id:18,cat:"Ensaladas",name:"Caesar",desc:"Lechuga francesa, escamas de queso regianito, croutons, panceta crocante y aderezo caesar.",price:15500,img:IMG_ENSALADA},
+{id:19,cat:"Ensaladas",name:"Pollo crocante y Palta",desc:"Mix de rúcula y lechuga francesa, palta orgánica, cebolla encurtida, pollo pastoril crocante, mix de semillas y vinagreta de oliva limón.",price:17800,img:IMG_ENSALADA},
+{id:20,cat:"Ensaladas",name:"Ensalada De Verano",desc:"Tomates cherry, lechugas, rúcula, huevo de campo, queso danbo, con aderezo de oliva y miel .",price:17800,img:IMG_ENSALADA},
+{id:21,cat:"Postres",name:"Sacher",desc:"Crema de vainilla de Madagascar, salsa de dulce de leche, helado y praliné de almendras.",price:8000,img:IMG_POSTRE},
+{id:22,cat:"Postres",name:"Helado de Artesian Chocolate",desc:"Helados artesalanes y tradicionales, con las mejores materias primas y frutas de estación. Sin aditivos.-",price:4500,img:IMG_POSTRE},
+{id:23,cat:"Postres",name:"Helado de Artesian Dulce de leche granizado",desc:"Helados artesalanes y tradicionales, con las mejores materias primas y frutas de estación. Sin aditivos.",price:4500,img:IMG_POSTRE},
+{id:24,cat:"Postres",name:"Helado de Artesian Frutilla al agua",desc:"Helados artesalanes y tradicionales, con las mejores materias primas y frutas de estación. Sin aditivos.-",price:4500,img:IMG_POSTRE},
+{id:25,cat:"Postres",name:"Helado de Artesian Pistacho",desc:"Helados artesalanes y tradicionales, con las mejores materias primas y frutas de estación. Sin aditivos.",price:4500,img:IMG_POSTRE},
+{id:26,cat:"Postres",name:"Milshake",desc:"Bebida fría, cremosa y espesa hecha a base de helado (vainilla, chocolate o dulce de leche), leche entera, cubierta con crema batida con chaucha de madagascar y toppings como salsas dulces/salasa de chocolate/praline de almendras.",price:7000,img:IMG_POSTRE},
+{id:27,cat:"Bebida sin alcohol",name:"Agua del día",desc:"Juago natural, elaborado con frutas de estación.",price:4500,img:IMG_SIN},
+{id:28,cat:"Bebida sin alcohol",name:"Agua sin gas",desc:"Agua de Las Misiones Sin Gas 500 ml",price:4500,img:IMG_SIN},
+{id:29,cat:"Bebida sin alcohol",name:"Agua con gas",desc:"Agua de Las Misiones con Gas 500 ml",price:4500,img:IMG_SIN},
+{id:30,cat:"Bebida sin alcohol",name:"Coca",desc:"Coca-cola Sabor Original 354gr",price:4500,img:IMG_SIN},
+{id:31,cat:"Bebida sin alcohol",name:"Coca Zero",desc:"Coca-Cola in Azúcar 354gr",price:4500,img:IMG_SIN},
+{id:32,cat:"Bebida sin alcohol",name:"Sprite",desc:"Sprite Lima limón 354gr",price:4500,img:IMG_SIN},
+{id:33,cat:"Bebida sin alcohol",name:"Sprite Zero",desc:"Sprite Lima Limón Sin Azúcar 354gr",price:4500,img:IMG_SIN},
+{id:34,cat:"Bebida sin alcohol",name:"Fanta",desc:"Fanta Naranja Zero 355 ml",price:4500,img:IMG_SIN},
+{id:35,cat:"Bebida sin alcohol",name:"Schweppes Tónica",desc:"Schweppes  Pomelo 354gr",price:4500,img:IMG_SIN},
+{id:36,cat:"Bebida sin alcohol",name:"Schweppes Pomelo",desc:"Schweppes  Tónica 354gr",price:4500,img:IMG_SIN},
+{id:37,cat:"Bebida con alcohol",name:"Cervaza Nonthue CARNE",desc:"Cerveza artesanal Amber.",price:7000,img:IMG_CON},
+{id:38,cat:"Bebida con alcohol",name:"Cervaza Nonthue Ipa",desc:"Cerveza artesanal rubia.",price:7000,img:IMG_CON},
+{id:39,cat:"Bebida con alcohol",name:"Cervaza Nonthue Porter",desc:"Cerveza artesanal negra.",price:7000,img:IMG_CON},
+{id:40,cat:"Bebida con alcohol",name:"Cervaza Nonthue Bitter",desc:"Cerveza artesanal roja.",price:7000,img:IMG_CON},
+{id:41,cat:"Bebida con alcohol",name:"Cervaza Nonthue Kolch",desc:"Cerveza artesanal rubia.",price:7000,img:IMG_CON},
+{id:42,cat:"Bebida con alcohol",name:"Cervaza Patagonia 24.7",desc:"Cerveza session ipa 730cc",price:10000,img:IMG_CON},
+{id:43,cat:"Bebida con alcohol",name:"Cervaza Patagonia Amber lager",desc:"Amber lager roja de 730cc",price:10000,img:IMG_CON},
+{id:44,cat:"Bebida con alcohol",name:"Cervaza Patagonia Lager del Sur",desc:"Rubia dorada, brillante, con una espuma densa y consistente  de 730 cc",price:10000,img:IMG_CON},
+{id:45,cat:"Bebida con alcohol",name:"Vino Santa Julia - La Vaquita",desc:"Clarette Natural.",price:23000,img:IMG_CON},
+{id:46,cat:"Bebida con alcohol",name:"Vino Santa Julia - Burro 750 Ml",desc:"Malbec Natural.",price:23000,img:IMG_CON},
+{id:47,cat:"Productos",name:"Ketchup",desc:"Es hora de que tengas este ketchup de lujo en tu heladera. 100% tomates organicos - 0% conservantes, concentrados, aditivos.",price:6800,img:IMG_PROD},
+{id:48,cat:"Productos",name:"Mostaza",desc:"Una mostaza tipo Dijon 100% natural, sin aditivos ni conservantes artificiales agregados. La nueva creación de Arytza lista para llevar a tu casa.",price:7200,img:IMG_PROD},
+{id:49,cat:"Promos",name:"Menú de mediodía",desc:"Hamburguesa clásica (tomate, lechuga francesa y cebolla morada) + papas de 150gr + nuestra agua del día",price:19500,img:IMG_PROMO},
+{id:50,cat:"Promos",name:"Menú de mediodía - Caesar",desc:"Nuestra ensalada Caesar (Lechuga francesa, escamas de queso regianito, croutons, panceta crocante y aderezo caesar) + agua del día",price:17500,img:IMG_PROMO},
+{id:51,cat:"Promos",name:"Doble carne doble queso + papas",desc:"Doble carne doble queso + papas de 150gr",price:20000,img:IMG_PROMO},
+{id:52,cat:"Promos",name:"Menú estudiantes",desc:"Hamburguesa clásica o Hamburguesa con queso + papas de 150gr + agua del día",price:17800,img:IMG_PROMO},
 ];
-const CATS=["Hamburguesas","Papas","Bebidas con Alcohol","Bebidas sin Alcohol","Postres","Promos"];
+const CATS=["Hamburguesas","Acompañamientos","Ensaladas","Postres","Bebida sin alcohol","Bebida con alcohol","Productos","Promos"];
 let curCat="Hamburguesas", cart=[];
 function show(v){
   ["home","menu","cart","admin"].forEach(x=>document.getElementById("view-"+x).classList.add("hidden"));
