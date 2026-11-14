@@ -3,84 +3,146 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CARNE - La Plata</title>
+<title>CARNE - La Plata | carne-laplata.com</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
-body{background:#000;color:#fff;padding:16px;padding-bottom:120px}
-header{text-align:center;padding:10px 0 18px}
-h1{font-size:64px;font-weight:900;letter-spacing:-2px;line-height:0.9}
-.sub{color:#999;font-size:14px;margin-top:6px}
-h2{font-size:32px;margin:22px 0 12px}
-.card{background:#1c1c1c;border-radius:16px;padding:14px;display:flex;gap:12px;align-items:center;margin-bottom:12px}
-.card img{width:64px;height:64px;border-radius:12px;object-fit:cover;background:#333}
-.card-info{flex:1}
-.card-info b{font-size:17px}
-.card-info p{font-size:13px;color:#aaa;margin-top:3px}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial, Helvetica, sans-serif}
+body{background:#000;color:#fff;padding-bottom:90px}
+header{text-align:center;padding:18px 0 8px}
+.logo{font-size:32px;font-weight:900;letter-spacing:2px;font-family:"Arial Black", Arial, sans-serif}
+h1{font-size:42px;margin:14px 20px 10px;font-weight:900}
+.filters{display:flex;gap:8px;overflow-x:auto;padding:0 20px 14px}
+.filters button{white-space:nowrap;background:#000;color:#fff;border:1px solid #fff;padding:10px 16px;border-radius:999px;cursor:pointer}
+.filters button.active{background:#fff;color:#000;font-weight:800}
+.card{margin:0 20px 14px;border:1px solid #fff;border-radius:14px;display:flex;gap:12px;padding:12px;background:#000}
+.card img{width:92px;height:92px;object-fit:cover;border-radius:10px;border:1px solid #fff}
+.card h3{font-size:18px;font-weight:800}
+.card p{font-size:13px;opacity:.8;margin:6px 0}
 .price{font-weight:900;font-size:18px}
-.add{background:#fff;color:#000;border:0;border-radius:999px;padding:10px 16px;font-weight:900;cursor:pointer}
-.cart-bar{position:fixed;left:12px;right:12px;bottom:12px;background:#fff;color:#000;border-radius:16px;padding:14px}
-.cart-bar button{width:100%;background:#000;color:#fff;border:0;padding:14px;border-radius:12px;font-weight:900;font-size:16px;margin-top:10px}
-input,select{width:100%;padding:12px;border-radius:10px;border:0;background:#2a2a2a;color:#fff;margin-top:8px}
-.note{background:#1c1c1c;border:1px solid #333;padding:12px;border-radius:12px;font-size:13px;color:#ccc;margin-top:16px;line-height:1.5}
-.hide{display:none}
+.add{background:#fff;border:0;color:#000;padding:10px 16px;border-radius:10px;font-weight:800;cursor:pointer}
+.row{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+nav{position:fixed;bottom:0;left:0;right:0;background:#000;border-top:1px solid #fff;display:flex;justify-content:space-around;padding:12px 0}
+nav button{background:none;border:0;color:#fff;font-size:13px;cursor:pointer}
+nav button span{display:block;font-size:22px}
+.hidden{display:none}
+input,textarea,select{width:100%;background:#000;color:#fff;border:1px solid #fff;border-radius:10px;padding:12px;margin:6px 0}
+.btn-gold{background:#fff;color:#000;border:0;padding:14px;border-radius:12px;font-weight:900;width:100%;cursor:pointer;margin-top:8px}
+.badge{background:#fff;color:#000;padding:3px 9px;border-radius:999px;font-size:12px}
+.cart-item{display:flex;justify-content:space-between;padding:12px 20px;border-bottom:1px solid #333}
 </style>
 </head>
 <body>
-<header><h1>CARNE</h1><div class="sub">Hamburguesas · La Plata</div></header>
+<header><div class="logo">CARNE</div></header>
 
-<div id="menu">
-<h2>Combos</h2>
-<div id="list"></div>
-<div class="note">📍 <b>Solo retiro por el local:</b> 4 y esquina 50, La Plata.<br>💳 <b>Se abona al retirar</b> con efectivo, tarjeta de crédito o débito.<br>No contamos con delivery propio.</div>
+<div id="view-home">
+  <div style="margin:0 20px;border:1px solid #fff;border-radius:16px;overflow:hidden">
+    <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?w=800" style="width:100%;height:220px;object-fit:cover;display:block">
+    <div style="padding:16px"><h2 style="font-size:28px">Las mejores hamburguesas<br>de La Plata</h2><p style="opacity:.8;margin:8px 0">Pedí en 2 minutos. Retiro o delivery.</p>
+    <button class="btn-gold" onclick="show('menu')">Ver Menú</button>
+    <button class="btn-gold" style="background:#000;color:#fff;border:1px solid #fff" onclick="show('menu')">Pedir Ahora</button></div>
+  </div>
+  <h1>Categorías</h1>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 20px">
+    <div class="card" style="flex-direction:column;align-items:center;text-align:center;margin:0" onclick="goCat('Hamburguesas')"><span style="font-size:32px">🍔</span><b>Hamburguesas</b></div>
+    <div class="card" style="flex-direction:column;align-items:center;text-align:center;margin:0" onclick="goCat('Papas')"><span style="font-size:32px">🍟</span><b>Papas</b></div>
+    <div class="card" style="flex-direction:column;align-items:center;text-align:center;margin:0" onclick="goCat('Bebidas con Alcohol')"><span style="font-size:32px">🍺</span><b>Con Alcohol</b></div>
+    <div class="card" style="flex-direction:column;align-items:center;text-align:center;margin:0" onclick="goCat('Bebidas sin Alcohol')"><span style="font-size:32px">🥤</span><b>Sin Alcohol</b></div>
+    <div class="card" style="flex-direction:column;align-items:center;text-align:center;margin:0" onclick="goCat('Postres')"><span style="font-size:32px">🍰</span><b>Postres</b></div>
+    <div class="card" style="flex-direction:column;align-items:center;text-align:center;margin:0" onclick="goCat('Promos')"><span style="font-size:32px">🔥</span><b>Promos</b></div>
+  </div>
+  <div style="padding:16px 20px"><button class="btn-gold" onclick="show('admin')">📣 Admin / Difusión Masiva</button></div>
 </div>
 
-<div id="cartView" class="hide">
-<h2>Tu pedido</h2>
-<div id="cartList"></div>
-<label>Nombre</label><input id="nombre" placeholder="Tu nombre">
-<label>Horario de retiro</label><select id="horario"><option>Lo antes posible</option><option>En 30 min</option><option>En 1 hora</option><option>Esta noche</option></select>
-<div class="note">📍 Retiro: 4 y 50, La Plata<br>💳 Abonás al retirar con efectivo, crédito o débito.</div>
+<div id="view-menu" class="hidden">
+  <h1 id="catTitle">Hamburguesas</h1>
+  <div class="filters" id="filters"></div>
+  <div id="list"></div>
 </div>
 
-<div class="cart-bar">
-<div><b id="totalText">Carrito vacío</b></div>
-<button id="mainBtn" onclick="toggleCart()">Ver carrito</button>
+<div id="view-cart" class="hidden">
+  <h1>Carrito <span class="badge" id="cartCount">0</span></h1>
+  <div id="cartList"></div>
+  <div style="padding:16px 20px">
+    <h3 id="total">Total: $0</h3>
+    <input id="custName" placeholder="Tu nombre">
+    <input id="custAddr" placeholder="Dirección / Retiro">
+    <select id="custType"><option>Delivery</option><option>Retiro</option></select>
+    <button class="btn-gold" onclick="sendOrder()">Pedir por WhatsApp</button>
+  </div>
 </div>
+
+<div id="view-admin" class="hidden">
+  <h1>Difusión Masiva</h1>
+  <div style="padding:0 20px">
+    <label>¿A quién?</label>
+    <select id="aud"><option>Todos los clientes</option><option>Solo los que ya pidieron</option><option>Solo Hamburguesas</option><option>Solo Papas</option></select>
+    <label>Título de la promo</label><input id="campTitle" value="PROMO HOY en CARNE">
+    <label>Mensaje</label><textarea id="campMsg" rows="4">Hoy 2x1 en Hamburguesa Clásica + Papas. Pedí acá 👇</textarea>
+    <button class="btn-gold" onclick="previewCamp()">Ver vista previa</button>
+    <div id="preview" style="margin-top:12px;border:1px solid #fff;border-radius:12px;padding:12px;display:none"></div>
+    <button class="btn-gold" style="background:#000;color:#fff;border:1px solid #fff" onclick="sendCamp()">📣 Enviar difusión por WhatsApp Business</button>
+    <p id="campLog" style="font-size:13px;opacity:.8;margin-top:10px"></p>
+  </div>
+</div>
+
+<nav>
+  <button onclick="show('home')"><span>🏠</span>Inicio</button>
+  <button onclick="show('menu')"><span>☰</span>Menú</button>
+  <button onclick="show('cart')"><span>🛒</span>Carrito</button>
+  <button onclick="show('admin')"><span>📣</span>Difusión</button>
+</nav>
 
 <script>
-const WHATSAPP = "5492210000000"; // <-- CAMBIAR POR EL NUMERO REAL DE CARNE
-const productos = [
- {id:1,nombre:"Caja Mundialista",desc:"Hamburguesa + papas + gaseosa",precio:80000,img:"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=200"},
- {id:2,nombre:"Combo ChoriBurguer",desc:"Choripán burguer + papas",precio:15000,img:"https://images.unsplash.com/photo-1550547660-d9450f859349?w=200"},
- {id:3,nombre:"CARNE Simple",desc:"Medallón 120g, cheddar, pan brioche",precio:12000,img:"https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=200"},
- {id:4,nombre:"CARNE Doble",desc:"Doble medallón, doble cheddar, bacon",precio:18000,img:"https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=200"},
- {id:5,nombre:"Papas CARNE",desc:"Papas con cheddar y verdeo",precio:9000,img:"https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=200"},
+const WA="5492216041030";
+const MENU=[
+{id:1,cat:"Hamburguesas",name:"Clásica CARNE",desc:"Carne 150g, queso cheddar, lechuga, tomate, salsa CARNE",price:8900,img:"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400"},
+{id:2,cat:"Hamburguesas",name:"Doble Queso",desc:"Doble carne 300g, doble cheddar, cebolla caramelizada",price:10500,img:"https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=400"},
+{id:3,cat:"Hamburguesas",name:"BBQ Bacon",desc:"Carne 150g, bacon crujiente, salsa BBQ, cebolla frita",price:11200,img:"https://images.unsplash.com/photo-1550547660-d9450f859349?w=400"},
+{id:4,cat:"Papas",name:"Papas Clásicas",desc:"Corte clásico, sal marina, crujientes por fuera",price:5500,img:"https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=400"},
+{id:5,cat:"Papas",name:"Papas Rústicas con Romero",desc:"Corte rústico, romero fresco, toque de ajo",price:6500,img:"https://images.unsplash.com/photo-1518013431117-eb1465fa5752?w=400"},
+{id:6,cat:"Bebidas con Alcohol",name:"Cerveza Artesanal",desc:"Pinta 500ml, rubia o roja",price:4500,img:"https://images.unsplash.com/photo-1535958636474-b021ee887b13?w=400"},
+{id:7,cat:"Bebidas sin Alcohol",name:"Gaseosa 500ml",desc:"Coca, Sprite o Fanta, bien fría",price:2800,img:"https://images.unsplash.com/photo-1629203851122-3726ecdf080e?w=400"},
+{id:8,cat:"Postres",name:"Brownie con Helado",desc:"Brownie tibio, helado de vainilla",price:5200,img:"https://images.unsplash.com/photo-1551024506-0bccd828d307?w=400"},
+{id:9,cat:"Promos",name:"Combo 2x1 Clásica",desc:"2 Clásicas + 2 Papas + 2 Gaseosas",price:18900,img:"https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=400"},
 ];
-let cart = {};
-function render(){
- document.getElementById('list').innerHTML = productos.map(p=>`
-  <div class="card"><img src="${p.img}"><div class="card-info"><b>${p.nombre}</b><p>${p.desc}</p><div class="price">$${p.precio.toLocaleString('es-AR')}</div></div><button class="add" onclick="add(${p.id})">+ Agregar</button></div>`).join('');
- let total=0, count=0;
- for(let id in cart){ let p=productos.find(x=>x.id==id); total+=p.precio*cart[id]; count+=cart[id]; }
- document.getElementById('totalText').innerText = count? `${count} productos · Total $${total.toLocaleString('es-AR')}` : "Carrito vacío";
- document.getElementById('cartList').innerHTML = Object.keys(cart).length? Object.keys(cart).map(id=>{let p=productos.find(x=>x.id==id); return `<div class="card"><div class="card-info"><b>${p.nombre}</b><p>${cart[id]} x $${p.precio.toLocaleString('es-AR')}</p></div><button class="add" onclick="change(${id},-1)">-</button><b>${cart[id]}</b><button class="add" onclick="change(${id},1)">+</button></div>`}).join('') : "<p>Tu carrito está vacío</p>";
+const CATS=["Hamburguesas","Papas","Bebidas con Alcohol","Bebidas sin Alcohol","Postres","Promos"];
+let curCat="Hamburguesas", cart=[];
+function show(v){
+  ["home","menu","cart","admin"].forEach(x=>document.getElementById("view-"+x).classList.add("hidden"));
+  document.getElementById("view-"+v).classList.remove("hidden");
+  if(v==="menu") renderMenu(); if(v==="cart") renderCart();
+  window.scrollTo(0,0);
 }
-function add(id){ cart[id]=(cart[id]||0)+1; render(); }
-function change(id,d){ cart[id]+=d; if(cart[id]<=0) delete cart[id]; render(); }
-let showingCart=false;
-function toggleCart(){
- if(!showingCart){ document.getElementById('menu').classList.add('hide'); document.getElementById('cartView').classList.remove('hide'); document.getElementById('mainBtn').innerText="Enviar pedido por WhatsApp"; showingCart=true; }
- else{
-  let nombre=document.getElementById('nombre').value||"Sin nombre";
-  let horario=document.getElementById('horario').value;
-  let msg=`Hola CARNE! Soy ${nombre}%0AQuiero retirar en 4 y 50 - ${horario}%0A%0A*PEDIDO:*%0A`;
-  for(let id in cart){let p=productos.find(x=>x.id==id); msg+=`- ${cart[id]}x ${p.nombre} $${(p.precio*cart[id]).toLocaleString('es-AR')}%0A`;}
-  let total=Object.keys(cart).reduce((s,id)=>s+productos.find(x=>x.id==id).precio*cart[id],0);
-  msg+=`%0A*Total: $${total.toLocaleString('es-AR')}*%0AAbono al retirar con efectivo / crédito / débito.`;
-  window.open(`https://wa.me/${WHATSAPP}?text=${msg}`,'_blank');
- }
+function goCat(c){curCat=c; show("menu");}
+function renderMenu(){
+  document.getElementById("catTitle").innerText=curCat;
+  document.getElementById("filters").innerHTML=CATS.map(c=>`<button class="${c===curCat?'active':''}" onclick="goCat('${c}')">${c}</button>`).join("");
+  document.getElementById("list").innerHTML=MENU.filter(m=>m.cat===curCat).map(m=>`
+    <div class="card"><img src="${m.img}"><div style="flex:1"><h3>${m.name}</h3><p>${m.desc}</p><div class="row"><span class="price">$${m.price.toLocaleString("es-AR")}</span><button class="add" onclick="add(${m.id})">Agregar</button></div></div></div>`).join("") || "<p style='padding:0 20px;opacity:.8'>Próximamente.</p>";
 }
-render();
+function add(id){let it=MENU.find(m=>m.id===id);let f=cart.find(c=>c.id===id); if(f) f.qty++; else cart.push({...it,qty:1}); alert(it.name+" agregado"); renderCart();}
+function renderCart(){
+  document.getElementById("cartCount").innerText=cart.reduce((a,c)=>a+c.qty,0);
+  let total=cart.reduce((a,c)=>a+c.qty*c.price,0);
+  document.getElementById("total").innerText="Total: $"+total.toLocaleString("es-AR");
+  document.getElementById("cartList").innerHTML=cart.map(c=>`<div class="cart-item"><span>${c.qty} x ${c.name}</span><b>$${(c.qty*c.price).toLocaleString("es-AR")}</b></div>`).join("") || "<p style='padding:0 20px'>Tu carrito está vacío.</p>";
+}
+function sendOrder(){
+  if(!cart.length) return alert("Agregá algo primero");
+  let total=cart.reduce((a,c)=>a+c.qty*c.price,0);
+  let msg=`Hola CARNE! Quiero pedir:%0A`+cart.map(c=>`- ${c.qty} x ${c.name} $${(c.qty*c.price).toLocaleString("es-AR")}`).join("%0A")+`%0A%0ATotal: $${total.toLocaleString("es-AR")}%0ANombre: ${document.getElementById("custName").value}%0A${document.getElementById("custType").value}: ${document.getElementById("custAddr").value}`;
+  window.open(`https://wa.me/${WA}?text=${msg}`,"_blank");
+}
+function previewCamp(){
+  let p=document.getElementById("preview"); p.style.display="block";
+  p.innerHTML=`<b>${document.getElementById("campTitle").value}</b><p style="margin:6px 0">${document.getElementById("campMsg").value}</p><small>Para: ${document.getElementById("aud").value} • Desde: CARNE</small>`;
+}
+function sendCamp(){
+  previewCamp();
+  let msg=encodeURIComponent(document.getElementById("campTitle").value+"\n"+document.getElementById("campMsg").value+"\n\nPedí acá: https://wa.me/"+WA);
+  document.getElementById("campLog").innerText="Campaña lista para probar.";
+  window.open(`https://wa.me/${WA}?text=${msg}`,"_blank");
+}
+renderMenu();
 </script>
 </body>
 </html>
